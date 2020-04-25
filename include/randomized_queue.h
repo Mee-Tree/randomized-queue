@@ -104,7 +104,7 @@ public:
     }
 
     void enqueue(T && item) {
-        m_data.push_back(std::move(item));
+        m_data.push_back(std::forward<T>(item));
         distribution = get_distribution();
     }
 
