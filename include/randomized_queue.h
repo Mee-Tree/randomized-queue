@@ -104,13 +104,12 @@ public:
     }
 
     void enqueue(T && item) {
-        m_data.push_back(std::forward<T>(item));
+        m_data.emplace_back(std::forward<T>(item));
         distribution = get_distribution();
     }
 
     T const & sample() const {
-        std::size_t ind = (std::mt19937_64(
-                static_cast<unsigned>(std::chrono::high_resolution_clock::now().time_since_epoch().count()))()) % size();
+        std::size_t ind = const_cast<randomized_queue *>(this)->get_random_index();
         return m_data[ind];
     }
 
