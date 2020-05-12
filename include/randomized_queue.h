@@ -17,7 +17,6 @@ class randomized_queue {
 public:
     randomized_queue() = default;
     randomized_queue(randomized_queue &&);
-    ~randomized_queue() = default;
 
     auto begin()         { return iterator(m_data.begin(), size()); };
     auto end()           { return iterator(m_data.begin(), size(), true); };

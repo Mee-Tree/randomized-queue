@@ -4,7 +4,7 @@
 
 template <class T>
 randomized_queue<T>::randomized_queue(randomized_queue<T> && other)
-        : m_data(other.m_data) {}
+        : m_data(std::move(other.m_data)) {}
 
 template <class T>
 bool randomized_queue<T>::empty() const {
@@ -24,7 +24,7 @@ void randomized_queue<T>::enqueue(const T & item) {
 
 template <class T>
 void randomized_queue<T>::enqueue(T && item) {
-    m_data.emplace_back(std::forward<T>(item));
+    m_data.emplace_back(std::move(item));
     distribution = get_distribution();
 }
 
@@ -90,14 +90,12 @@ public:
             , m_current(other.m_current)
             , m_permutation(other.m_permutation) {}
 
-    ~random_iterator() = default;
-
     reference operator * () const {
         return *(m_begin + m_permutation[m_current]);
     }
 
     pointer operator -> () const {
-        return (m_begin + m_permutation[m_current]).operator -> ();
+        return &(m_begin + m_permutation[m_current]);
     }
 
     random_iterator & operator ++ () {
