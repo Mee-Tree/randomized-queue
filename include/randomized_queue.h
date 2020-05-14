@@ -16,7 +16,7 @@ class randomized_queue {
 
 public:
     randomized_queue() = default;
-    randomized_queue(randomized_queue &&);
+    randomized_queue(randomized_queue &&) = default;
 
     auto begin()         { return iterator(m_data.begin(), size()); };
     auto end()           { return iterator(m_data.begin(), size(), true); };
@@ -37,12 +37,7 @@ private:
     std::uniform_int_distribution<std::size_t> get_distribution();
     std::size_t get_random_index();
 
-    static std::mt19937_64 get_random_generator() {
-        std::random_device random_device;
-        return std::mt19937_64(random_device());
-    }
-
-    std::mt19937_64 generator = get_random_generator();
+    inline static std::mt19937_64 generator = std::mt19937_64{std::random_device{}()};
     std::uniform_int_distribution<std::size_t> distribution;
     std::vector<T> m_data;
 };

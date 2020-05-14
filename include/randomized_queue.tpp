@@ -3,10 +3,6 @@
 /* -------RandomizedQueue------- */
 
 template <class T>
-randomized_queue<T>::randomized_queue(randomized_queue<T> && other)
-        : m_data(std::move(other.m_data)) {}
-
-template <class T>
 bool randomized_queue<T>::empty() const {
     return m_data.empty();
 }
@@ -66,14 +62,13 @@ class randomized_queue<T>::random_iterator {
             typename std::vector<T>::iterator>;
 
     random_iterator(begin_type begin, std::size_t size, bool is_end = false)
-    : m_begin(begin), m_current(is_end ? size : 0) {
-        m_permutation.resize(size);
+    : m_begin(begin), m_current(is_end ? size : 0), m_permutation(size) {
         generate();
     }
 
     void generate() {
         std::iota(m_permutation.begin(), m_permutation.end(), 0);
-        std::shuffle(m_permutation.begin(), m_permutation.end(), get_random_generator());
+        std::shuffle(m_permutation.begin(), m_permutation.end(), generator);
         m_permutation.push_back(m_permutation.size());
     }
 
