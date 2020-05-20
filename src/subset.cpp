@@ -4,8 +4,13 @@
 void subset(unsigned long k, std::istream & in, std::ostream & out)
 {
     std::string line;
-    while (k > 0 && std::getline(in, line)) {
-        out << line << std::endl;
-        --k;
+    randomized_queue<std::string> queue;
+
+    while (std::getline(in, line)) {
+        queue.enqueue(line);
+    }
+
+    while (!queue.empty() && k--) {
+        out << queue.dequeue() << std::endl;
     }
 }
