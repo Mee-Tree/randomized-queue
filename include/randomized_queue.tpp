@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 /* -------RandomizedQueue------- */
 
 template <class T>
@@ -26,7 +28,7 @@ void randomized_queue<T>::enqueue(T && item) {
 
 template <class T>
 T const & randomized_queue<T>::sample() const {
-    std::size_t ind = const_cast<randomized_queue *>(this)->get_random_index();
+    std::size_t ind = get_random_index();
     return m_data[ind];
 }
 
@@ -46,7 +48,7 @@ std::uniform_int_distribution<std::size_t> randomized_queue<T>::get_distribution
 }
 
 template <class T>
-std::size_t randomized_queue<T>::get_random_index() {
+std::size_t randomized_queue<T>::get_random_index() const {
     return distribution(generator);
 }
 

@@ -1,10 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <utility>
 #include <random>
-#include <algorithm>
-#include <chrono>
 
 template <class T>
 class randomized_queue {
@@ -35,10 +31,10 @@ public:
 
 private:
     std::uniform_int_distribution<std::size_t> get_distribution();
-    std::size_t get_random_index();
+    std::size_t get_random_index() const;
 
     inline static std::mt19937_64 generator = std::mt19937_64{std::random_device{}()};
-    std::uniform_int_distribution<std::size_t> distribution;
+    mutable std::uniform_int_distribution<std::size_t> distribution;
     std::vector<T> m_data;
 };
 
